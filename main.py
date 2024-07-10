@@ -9,6 +9,16 @@ def cadastrar_produto(estoque):
     print(f"Produto {nome_produto} cadastrado com sucesso!")
     return estoque
 
+def comprar_produto(estoque):
+    nome_produto = input("Digite o nome do produto que deseja comprar: ")
+
+    if nome_produto in estoque:
+        quantidade1 = int(input("Digite a quantidade que deseja comprar: "))
+        valor1 = float(input("Digite o valor do produto: "))
+
+        estoque[nome_produto]["Quantidade"] += quantidade1
+        estoque[nome_produto]["Valor"] += valor1
+        print(f"Nova compra realizada com sucesso!")
 
 def mostrar_estoque(estoque):
     print("\nEstoque atual:")
@@ -21,7 +31,7 @@ estoque = {}
 while True:
     print("Menu:")
     print("1. Cadastrar produto")
-    print("2. Alterar produto")
+    print("2. Comprar produto")
     print("3. Mostrar estoque")
     print("4. Prejuízo/Despesas")
     print("5. Sair")
@@ -38,7 +48,7 @@ while True:
             else:
                 print("Digite um valor válido.\n **********************************")
     elif menu == 2:
-        print("Comprar produtos")
+        comprar_produto(estoque)
     elif menu == 3:
         mostrar_estoque(estoque)
     elif menu == 4:
