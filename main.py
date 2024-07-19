@@ -5,8 +5,9 @@ def cadastrar_produto(estoque):
     quantidade = int(0)
     valor = float(0.0)
     lucro_bruto = float(0.0)
+    lucro_liquido = float(0.0)
 
-    estoque[nome_produto] = {"Quantidade": quantidade, "Valor": valor, "Lucro_bruto": lucro_bruto}
+    estoque[nome_produto] = {"Quantidade": quantidade, "Valor": valor, "Lucro_bruto": lucro_bruto, "Lucro_liquido": lucro_liquido}
     print(f"Produto {nome_produto} cadastrado com sucesso!")
     return estoque
 
@@ -22,20 +23,27 @@ def comprar_produto(estoque):
         print(f"Nova compra realizada com sucesso!")
 
 def venda_produto(estoque):
-    nome_produto = input("Digite o nome do produto que deseja comprar: ")
+    nome_produto = input("Digite o nome do produto que deseja vender: ")
 
     if nome_produto in estoque:
         quantidade2 = int(input("Digite a quantidade que deseja vender: "))
-        valor2 = float(input("Digite o valor da venda: "))
+        if quantidade2 <= estoque[nome_produto]["Quantidade"]:
+            valor2 = float(input("Digite o valor da venda: "))
 
-        estoque[nome_produto]["Quantidade"] -= quantidade2
-        estoque[nome_produto]["Lucro_bruto"] += valor2
-        print(f"Nova venda realizada com sucesso!")
+            estoque[nome_produto]["Quantidade"] -= quantidade2
+            estoque[nome_produto]["Lucro_bruto"] += valor2
+            print(f"Nova venda realizada com sucesso!")
+
+            estoque[nome_produto]["Lucro_liquido"] = estoque[nome_produto]["Lucro_bruto"] - estoque[nome_produto]["Valor"]
+        else:
+            print("Quantide em estoque menor do que a que deseja vender.")
+
+
 
 def mostrar_estoque(estoque):
     print("\nEstoque atual:")
     for produto, dados in estoque.items():
-        print(f"Produto: {produto}, Quantidade: {dados['Quantidade']}, Valor: R$ {dados['Valor']:.2f}, Lucro_Bruto: R$ {dados['Lucro_bruto']:.2f}")
+        print(f"Produto: {produto}\n Quantidade: {dados['Quantidade']}\n Valor: R$ {dados['Valor']:.2f}\n Lucro_Bruto: R$ {dados['Lucro_bruto']:.2f}\n Lucro_Liquido: R$ {dados['Lucro_liquido']:.2f}")
     print()
 
 estoque = {}
